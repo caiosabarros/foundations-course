@@ -1,6 +1,13 @@
 # foundations-course
 NextJS Foundations Course for BYUI WDD430.
 
+# Foundational Course NextJs Chapter 1-5
+1. Run:
+```shell
+$ cd nextjs-dashboard # get into the app folder
+$ npm run dev # run the app
+```
+
 # Class 1
 DOM: it is like the AST for Solidity smart contracts. It is the Document Object Model.
 
