@@ -143,3 +143,5 @@ Wait: If a new event occurs before the timer expires, the timer is reset.
 Execution: If the timer reaches the end of its countdown, the debounced function is executed.
 
 Debouncing prevents a new database query on every keystroke, thus saving resources.
+
+The `error.tsx` file serves as a catch-all for unexpected errors and allows you to display a fallback UI to your users.
