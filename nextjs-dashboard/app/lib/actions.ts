@@ -9,6 +9,9 @@ Since you're updating the data displayed in the invoices route, you want to clea
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
+// Use Zod to update the expected types
+const UpdateInvoice = FormSchema.omit({ id: true, date: true });
+
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 const FormSchema = z.object({
@@ -46,4 +49,41 @@ export async function createInvoice(formData: FormData) {
 
     revalidatePath('/dashboard/invoices');
     redirect('/dashboard/invoices');
+}
+
+/**
+Similarly to the createInvoice action, here you are:
+
+Extracting the data from formData.
+Validating the types with Zod.
+Converting the amount to cents.
+Passing the variables to your SQL query.
+Calling revalidatePath to clear the client cache and make a new server request.
+Calling redirect to redirect the user to the invoice's page.
+ */
+export async function updateInvoice(id: string, formData: FormData) {
+    const { customerId, amount, status } = UpdateInvoice.parse({
+        customerId: formData.get('customerId'),
+        amount: formData.get('amount'),
+        status: formData.get('status'),
+    });
+
+    const amountInCents = amount * 100;
+
+    await sql`
+      UPDATE invoices
+      SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
+      WHERE id = ${id}
+    `;
+
+    revalidatePath('/dashboard/invoices');
+    redirect('/dashboard/invoices');
+}
+
+/**
+Since this action is being called in the /dashboard/invoices path, you don't need to call redirect. Calling revalidatePath will trigger a new server request and re-render the table.
+ */
+export async function deleteInvoice(id: string) {
+    await sql`DELETE FROM invoices WHERE id = ${id}`;
+    revalidatePath('/dashboard/invoices');
 }
