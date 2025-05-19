@@ -11,6 +11,9 @@ export default async function InvoicesTable({
   query: string;
   currentPage: number;
 }) {
+  /**
+   * f you search for a term, you'll update the URL, which will send a new request to the server, data will be fetched on the server, and only the invoices that match your query will be returned.
+   */
   const invoices = await fetchFilteredInvoices(query, currentPage);
 
   return (
