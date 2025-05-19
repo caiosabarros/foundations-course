@@ -36,3 +36,6 @@ The top-level component and the child components form what they call the `compon
 - React needs something to uniquely identify items in an array so it knows which elements to update in the DOM.
 - Unlike props which are passed to components as the first function parameter, the state is initiated and stored within a component. You can pass the state information to children components as props, but the logic for updating the state _should be kept_ within the component where state was initially created. That is, the functions for updating state should be passed down.
 - Props are read-only information that's passed to components. State is information that can change over time, usually triggered by user interaction.
+
+NEXTJS:
+- What does Next.js do when a <Link> component appears in the browser’s viewport in a production environment? Next.js automatically prefetches the code for the linked route in the background. By the time the user clicks the link, the code for the destination page will already be loaded in the background, and this is what makes the page transition near-instant!
